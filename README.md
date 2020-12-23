@@ -4,13 +4,14 @@
 
 ## 项目地址
 
-| Github地址                                         | 说明            |
-| -------------------------------------------------- | --------------- |
-| https://github.com/YueLiMin-say                    | 个人页面        |
-| https://github.com/YueLiMin-say/wanxin-p2p-web.git | 前端工程        |
-| https://github.com/YueLiMin-say/wanxin-p2p.git     | 后端工程        |
-| https://github.com/YueLiMin-say/TencentSms.git     | Tencent短信服务 |
-| https://github.com/YueLiMin-say/minio.git          | 存储服务        |
+| Github地址                                             | 说明            |
+| ------------------------------------------------------ | --------------- |
+| https://github.com/YueLiMin-say                        | 个人页面        |
+| https://github.com/YueLiMin-say/wanxin-p2p-web.git     | 前端工程        |
+| https://github.com/YueLiMin-say/wanxin-p2p.git         | 后端工程        |
+| https://github.com/YueLiMin-say/wanxin-p2p-manager.git | 后台前端工程    |
+| https://github.com/YueLiMin-say/TencentSms.git         | Tencent短信服务 |
+| https://github.com/YueLiMin-say/minio.git              | 存储服务        |
 
 ## 项目预览
 
