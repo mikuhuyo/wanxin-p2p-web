@@ -45,7 +45,7 @@
 					url: 'consumer/my/bank-cards',
 				}).then(res => {
 					this.cardsInfo = res.data.result
-					let num = res.data.result.cardNumber
+					let num = res.data.result.cardNumber + '';
 					let name = res.data.result.fullName
 					this.fullName = name.replace(name.charAt(0), '*')
 					this.cardNumber = num.substr(num.length-4)
@@ -112,4 +112,3 @@
 		}
 	}
 </style>
-
