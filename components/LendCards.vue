@@ -15,7 +15,7 @@
 				</view>
 			</view>
 			<view class="ritBox">
-				<view> 剩余 {{options.remainingAmount}} 元</view>
+				<view> 剩余 {{options.amount}} 元</view>
 				<view class="butItem"><ButtonItems type="med-blue-empty" value="出借" @click="bindClick"></ButtonItems></view>
 				<view> 持满30天可转让</view>
 			</view>
