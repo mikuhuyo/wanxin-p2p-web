@@ -10,7 +10,8 @@
 			<view class="icon">&#xe61b;</view>
 		</view>
 		<view class="action">
-			<view class="add" @tap="goPath(`/pages/user/pay?balance=${userInfo.balance}`)">
+			<!-- ?balance=${userInfo.balance} -->
+			<view class="add" @tap="goPath(`/pages/user/pay`)">
 				<text class="icon" >&#xe614;</text>充值
 			</view>
 			<view class="res" @tap="goPath(`/pages/user/withdrawal?balance=${userInfo.balance}`)">

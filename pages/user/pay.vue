@@ -12,10 +12,13 @@
 		</view>
 		<view class="cardsBlock">
 			<view class="title">充值金额</view>
-			<view class="inputBox"><text class="monIcon">￥</text><m-input type="text" class="number" @input="setNumber" placeholder="请输入充值金额" /><text>元</text></view>
-			<view class="allQuota">可用金额： {{$route.query.balance}}元</view>
+			<view class="inputBox"><text class="monIcon">￥</text>
+				<m-input type="text" class="number" @input="setNumber" placeholder="请输入充值金额" /><text>元</text></view>
+			<view class="allQuota">银行卡可用金额： {{bankCardDetails}}元</view>
 		</view>
-		<view class="butBox"><ButtonItems type="big-blue" size="14" value="充值" @click="submitHandle"></ButtonItems></view>
+		<view class="butBox">
+			<ButtonItems type="big-blue" size="14" value="充值" @click="submitHandle"></ButtonItems>
+		</view>
 	</view>
 </template>
 
@@ -23,12 +26,13 @@
 	import topBar from '../../components/TopBar.vue'
 	import mInput from '../../components/m-input.vue'
 	import ButtonItems from "../../components/ButtonItems.vue"
-    export default {
-		data(){
-			return{
-				cardsInfo:{},
-				cardNumber:'',
-				amount:''
+	export default {
+		data() {
+			return {
+				cardsInfo: {},
+				cardNumber: '',
+				amount: '',
+				bankCardDetails: ''
 			}
 		},
 		components: {
@@ -37,19 +41,30 @@
 			ButtonItems
 		},
 		onLoad() {
-			this.getCardsInfo()	
+			this.getCardsInfo()
 		},
-        methods: {
-			setNumber(event){
+		methods: {
+			setNumber(event) {
 				this.amount = event
 			},
-            getCardsInfo(){
+			getCardsInfo() {
+				this.request({
+					url: 'consumer/my/bank-card-details',
+				}).then(res => {
+					this.bankCardDetails = res.data.result
+				}).catch(err => {
+					uni.showToast({
+						icon: 'none',
+						title: err.data.msg
+					});
+				})
+
 				this.request({
 					url: 'consumer/my/bank-cards',
 				}).then(res => {
 					this.cardsInfo = res.data.result
 					let num = res.data.result.cardNumber
-					this.cardNumber = num.substr(num.length-4)
+					this.cardNumber = num.substr(num.length - 4)
 				}).catch(err => {
 					uni.showToast({
 						icon: 'none',
@@ -57,8 +72,8 @@
 					});
 				})
 			},
-			submitHandle(){
-				if(this.amount <= 0 ){
+			submitHandle() {
+				if (this.amount <= 0) {
 					uni.showToast({
 						icon: 'none',
 						title: '请输入正缺的充值金额！',
@@ -67,13 +82,14 @@
 				}
 				this.request({
 					url: 'consumer/my/recharge-records',
-					params:{
+					params: {
 						amount: this.amount,
-						callbackUrl:`${this.utils.getBaseUrl()}/#/pages/common/success?st=2`
+						callbackUrl: `${this.utils.getBaseUrl()}/#/pages/common/success?st=2`
 					}
 				}).then(res => {
 					const urlData = res.data.result
-					const url = `${urlData.depositoryUrl}?serviceName=${urlData.serviceName}&platformNo=${urlData.platformNo}&reqData=${urlData.reqData}&signature=${urlData.signature}`
+					const url =
+						`${urlData.depositoryUrl}?serviceName=${urlData.serviceName}&platformNo=${urlData.platformNo}&reqData=${urlData.reqData}&signature=${urlData.signature}`
 					window.location.href = url
 				}).catch(err => {
 					uni.showToast({
@@ -82,51 +98,59 @@
 					});
 				})
 			}
-        }
-    }
+		}
+	}
 </script>
 
 <style lang="scss" scoped="true">
-	.pay{
-		.backInfo{
+	.pay {
+		.backInfo {
 			display: flex;
 			font-size: 28upx;
-			color:$uni-text-color-grey;
+			color: $uni-text-color-grey;
 			line-height: 42upx;
-			.backIco{
+
+			.backIco {
 				width: 84upx;
 				height: 84upx;
 				border-radius: 100%;
 				margin-right: 20upx;
 			}
-			.title{
-				color:$uni-text-color-greyb;
+
+			.title {
+				color: $uni-text-color-greyb;
 			}
 		}
-		.inputBox{
+
+		.inputBox {
 			display: flex;
-			.monIcon{
+
+			.monIcon {
 				position: relative;
-				top:5px;
+				top: 5px;
 				margin-right: 10upx;
 			}
 		}
-		.title{
+
+		.title {
 			margin-bottom: 30upx;
-			
+
 		}
-		.number{
+
+		.number {
 			flex: 1;
 		}
-		.allQuota{
+
+		.allQuota {
 			padding: 20upx 0;
-			color:$uni-text-color-grey;
-			margin-top:10upx;
-			border-top:solid 1px $uni-border-color;
+			color: $uni-text-color-grey;
+			margin-top: 10upx;
+			border-top: solid 1px $uni-border-color;
 		}
-		.butBox{
+
+		.butBox {
 			padding: 10px 30upx;
-			
+
 		}
 	}
 </style>
